@@ -29,6 +29,10 @@ entity_t	*currententity;
 int			r_visframecount;	// bumped when going to a new PVS
 int			r_framecount;		// used for dlight push checking
 
+// Shadow mapping variables
+static GLuint r_shadow_fbo;
+static GLuint r_shadow_depthtexture;
+
 mplane_t	frustum[4];
 
 //johnfitz -- rendering statistics
