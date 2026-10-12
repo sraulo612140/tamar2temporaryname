@@ -33,6 +33,12 @@ int			r_framecount;		// used for dlight push checking
 static GLuint r_shadow_fbo;
 static GLuint r_shadow_depthtexture;
 
+cvar_t	r_shadow_filter = {"r_shadow_filter","0",CVAR_ARCHIVE};
+cvar_t	r_shadow_resolution = {"r_shadow_resolution","1024",CVAR_ARCHIVE};
+
+//johnfitz -- shadow mapping state
+static qboolean	r_shadows_initialized = false;
+
 mplane_t	frustum[4];
 
 //johnfitz -- rendering statistics
@@ -880,9 +886,36 @@ void R_ShowTris (void)
 }
 
 /*
-================
+===============
+R_ShadowInit
+===============
+*/
+void R_ShadowInit (void)
+{
+	if (r_shadows_initialized)
+		return;
+	
+	// Initialize FBO for shadow mapping if available
+	// For now, just mark as initialized - FBO implementation can be added later
+	r_shadows_initialized = true;
+	Con_Printf("Shadow mapping initialization complete\n");
+}
+
+/*
+===============
+R_ShadowShutdown
+===============
+*/
+void R_ShadowShutdown (void)
+{
+	r_shadows_initialized = false;
+	Con_Printf("Shadow mapping shut down\n");
+}
+
+/*
+===============
 R_DrawShadows
-================
+===============
 */
 void R_DrawShadows (void)
 {
