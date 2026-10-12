@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int	r_dlightframecount;
 
 extern cvar_t r_flatlightstyles; //johnfitz
+extern cvar_t r_dynamic; //johnfitz -- dynamic lighting control
 
 /*
 ==================
@@ -126,7 +127,7 @@ void R_RenderDlights (void)
 	int		i;
 	dlight_t	*l;
 
-	if (!gl_flashblend.value)
+	if (!gl_flashblend.value || !r_dynamic.value)
 		return;
 
 	r_dlightframecount = r_framecount + 1;	// because the count hasn't advanced yet for this frame
@@ -237,7 +238,7 @@ void R_PushDlights (void)
 	int		i;
 	dlight_t	*l;
 
-	if (gl_flashblend.value)
+	if (gl_flashblend.value || !r_dynamic.value)
 		return;
 
 	r_dlightframecount = r_framecount + 1;	// because the count hasn't advanced yet for this frame
